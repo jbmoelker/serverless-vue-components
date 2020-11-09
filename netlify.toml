@@ -1,0 +1,12 @@
+[build]
+  command = "yarn build"
+  publish = "dist/"
+  functions = "functions/"
+
+[dev]
+  dir = "dist/"
+
+[[redirects]]
+  from = "/api/v1/components/*"
+  to = "/.netlify/functions/render:splat"
+  status = 200
