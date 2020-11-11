@@ -1,10 +1,18 @@
-const fs = require('fs').promises
+const fse = require('fs-extra')
+const Promise = require('bluebird')
+const getComponents = require('../lib/get-components')
 
-const basename = './dist/HelloWorld'
-
-fs.readFile(`${basename}.css`)
-    .then(css => {
+async function transformComponents() {
+    const componentNames = await getComponents()
+    return Promise.mapSeries(componentNames, async (name) => {
+        const basename = `./dist/components/${name}`
+        const exists = await fse.pathExists(`${basename}.css`)
+        if (!exists) return Promise.resolve()
+        const css = await fse.readFile(`${basename}.css`)
         const js = `module.exports = '${css}';`
-        return fs.writeFile(`${basename}.css.js`, js)
+        return fse.outputFile(`${basename}.css.js`, js)
     })
-    .then(() => console.log(`Saved ${basename}.css as js`))
+}
+
+transformComponents()
+    .then(() => console.log('Transformed .css files to .js files'))

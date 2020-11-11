@@ -3,12 +3,12 @@ const httpMultipartBodyParser = require('@middy/http-multipart-body-parser')
 const renderer = require('vue-server-renderer').createRenderer()
 const Vue = require('vue')
 
-const HelloWorld = require('../dist/components/HelloWorld.common.js')
-const css = require('../dist/components/HelloWorld.css.js')
-const docsHtml = require('../dist/components/HelloWorld.html.js')
+const DigitalClock = require('../dist/components/DigitalClock.common.js')
+const css = require('../dist/components/DigitalClock.css.js')
+const docsHtml = require('../dist/components/DigitalClock.html.js')
 
 async function handler(event) {
-    const { httpMethod, queryStringParameters } = event
+    const { httpMethod } = event
     console.log(event)
     // todo: use POST requests with payload instead of query string params
     if (!['GET','POST'].includes(httpMethod)) {
@@ -26,13 +26,11 @@ async function handler(event) {
     }
 
     const app = new Vue({
-        components: { HelloWorld },
+        components: { DigitalClock },
         data: {
-            ssrProps: {
-              msg: queryStringParameters.msg,
-            },
+            ssrProps: {},
         },
-        template: `<HelloWorld v-bind="ssrProps"></HelloWorld>`
+        template: `<DigitalClock v-bind="ssrProps"></DigitalClock>`
     })
     const html = await renderer.renderToString(app)
     return {

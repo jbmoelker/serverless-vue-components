@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <title><%= name %> • Serverless Vue Components</title>
+    <style type="text/css">
+    html {
+        font-family: Arial, sans-serif;
+    }
+    body {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1rem;
+    }
+    textarea {
+        display: block;
+        width: 100%;
+        min-height: 200px;
+    }
+    </style>
+  </head>
+  <body>
+    <h1><%= name %> component</h1>
+    <%- docs %>
+
+    <form method="POST" action="<%= baseUrl %>/api/v1/components/<%= name %>">
+        <h1>Try it</h1>
+        <p><code>POST <%= baseUrl %>/api/v1/components/<%= name %></code> with</p>
+        <label for="payload">payload</label>
+        <textarea id="payload" name="config"><%= configValue %></textarea>
+        <input type="hidden" name="source" value="editor">
+        <button type="submit">submit</button>
+    </form>
+  </body>
+</html>

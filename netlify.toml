@@ -5,6 +5,7 @@
 
 [dev]
   dir = "dist/"
+  port = 55189
 
 [[redirects]]
   from = "/api/v1/components/*"
